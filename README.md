@@ -15,9 +15,13 @@ _(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) er
 
 ## Verdrahtung:
 ![wiring](Images/wiring.png)
-Verdrahtung
+
+(Verdrahtung)
+
 ![Beispielaufbau](Images/beispielaufbau.JPG)
-Beispielaufbau (ohne Taster!)
+
+(Beispielaufbau (ohne Taster!))
+
 
 
 ## Konfiguration des Wemos D1
