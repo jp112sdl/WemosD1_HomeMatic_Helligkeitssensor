@@ -18,11 +18,11 @@ Bei Tests in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei c
 ## Verdrahtung:
 ![wiring](Images/wiring.png)
 
-(Verdrahtung)
+**(Verdrahtung)**
 
 ![Beispielaufbau](Images/beispielaufbau.JPG)
 
-(Beispielaufbau (ohne Taster!))
+**(Beispielaufbau (ohne Taster!))**
 
 
 
@@ -31,10 +31,11 @@ In der WebUI unter Einstellungen->Systemvariable ist eine Variable vom Typ Zahl 
 Beim Klick auf den Button 'Neu' öffnet sich ein Fenster zum Anlegen der Variable.
 ![ccuvariableneu](Images/CCU_VariableNeu.png)
 
+**(Anlegen einer Variable in der WebUI)**
 
 ## Konfiguration des Wemos D1
 Um den Konfigurationsmodus zu starten, muss der Wemos D1 **mit gedrückt gehaltenem Taster gestartet** werden.
-Die **blaue LED am Wifi-Modul blinkt kurz und leuchtet dann dauerhaft. **
+Die **blaue LED am Wifi-Modul blinkt kurz und leuchtet dann dauerhaft.**
 
 **Der Konfigurationsmodus ist nun aktiv.**
 
@@ -44,16 +45,22 @@ Es erscheint ein neues WLAN mit dem Namen "WemosD1-xx:xx:xx:xx:xx:xx"
 
 Nachdem man sich mit diesem verbunden hat, öffnet sich automatisch das Konfigurationsportal.
 
-Geschieht dies nicht nach ein paar Sekunden, ist im Browser die Seite http://192.168.4.1 aufzurufen.
+Geschieht dies nicht automatisch nach ca. 10 Sekunden, ist im Browser die Seite http://192.168.4.1 aufzurufen.
 
 **WLAN konfigurieren auswählen**
 
-**SSID**: WLAN aus der Liste auswählen, oder SSID manuell eingeben
+**SSID**: WLAN aus der Liste oben auswählen, oder SSID manuell eingeben
 
 **WLAN-Key**: WLAN Passwort
 
-**CCU IP**: IP-Adresse der CCU2
+**IP der CCU2**: IP-Adresse der CCU2
 
 **Variablenname**: Name der Variable, die zuvor in der CCU2 angelegt wurde
 
 **Übertragung alle x Sekunden**: Sende-Intervall
+
+![WifiConfig_Empty](Images/WifiConfig.png) 
+
+
+**(Konfiguration leer / Beispiel)**
+
