@@ -2,9 +2,9 @@
 
 ## Zusammenfassung:
 Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert (ca. 0...1023) an eine Variable der CCU2.
-_(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen...)_
+_(Genauere Werte sind zB mit einem BH1750 Helligkeitssensor statt eines einfachen Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen... Aber die Integration eines I2C BH1750 Helligkeitssensor-Moduls (ca. 2,29 EUR) ist in Arbeit und wird fertiggestellt, sobald mir das Bauteil geliefert wurde.)_
 
-Bei Tests in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei ca. 1000.
+Bei Tests mit dem LDR in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei ca. 1000.
 
 
 ## Teileliste:
