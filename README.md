@@ -12,6 +12,7 @@ _(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) er
 - 1x [LDR](http://www.ebay.de/itm/321957950526)
 - 1x [Widerstand 10k](http://www.ebay.de/itm/221833069520)
 - 1x [Taster](http://www.ebay.de/itm/263057910534), wird jedoch nur zur (Erst-)Konfiguration benötigt
+(_statt des Tasters kann man auch mit einer temporären Drahtbrücke arbeiten_) 
 
 ## Verdrahtung:
 ![wiring](Images/wiring.png)
@@ -25,10 +26,10 @@ _(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) er
 
 
 ## Konfiguration des Wemos D1
-Um den Konfigurationsmodus zu starten, muss der Wemos D1 mit gedrückt gehaltenem Taster gestartet werden.
-Die blaue LED blinkt kurz und leuchtet dann dauerhaft. 
+Um den Konfigurationsmodus zu starten, muss der Wemos D1 **mit gedrückt gehaltenem Taster gestartet** werden.
+Die **blaue LED am Wifi-Modul blinkt kurz und leuchtet dann dauerhaft. **
 
-Der Konfigurationsmodus ist nun aktiv.
+**Der Konfigurationsmodus ist nun aktiv.**
 
 Auf dem Handy oder Notebook sucht man nun nach neuen WLAN Netzen in der Umgebung. 
 
