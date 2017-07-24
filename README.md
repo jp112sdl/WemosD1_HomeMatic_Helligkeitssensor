@@ -1,9 +1,10 @@
 # WemosD1 HomeMatic Helligkeitssensor
 
 ## Zusammenfassung:
-Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert (ca. 0...1023) an eine Variable der CCU.
+Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert (ca. 0...1023) an eine Variable der CCU2.
 _(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen.)_
 
+Bei Tests in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei ca. 1000.
 
 
 ## Teileliste:
@@ -23,6 +24,12 @@ _(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) er
 
 (Beispielaufbau (ohne Taster!))
 
+
+
+## Vorbereitung an der CCU
+In der WebUI unter Einstellungen->Systemvariable ist eine Variable vom Typ Zahl anzulegen.
+Beim Klick auf den Button 'Neu' öffnet sich ein Fenster zum Anlegen der Variable.
+![ccuvariableneu](Images/CCU_VariableNeu.png)
 
 
 ## Konfiguration des Wemos D1
@@ -45,8 +52,8 @@ Geschieht dies nicht nach ein paar Sekunden, ist im Browser die Seite http://192
 
 **WLAN-Key**: WLAN Passwort
 
-**CCU IP**: selbsterklärend
+**CCU IP**: IP-Adresse der CCU2
 
-**Variablenname**: Name der Variable, die in der CCU angelegt wurde
+**Variablenname**: Name der Variable, die zuvor in der CCU2 angelegt wurde
 
 **Übertragung alle x Sekunden**: Sende-Intervall
