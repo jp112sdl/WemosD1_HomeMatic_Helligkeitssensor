@@ -2,7 +2,7 @@
 
 ## Zusammenfassung:
 Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert (ca. 0...1023) an eine Variable der CCU2.
-_(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen.)_
+_(Genauere Werte sind mit einer Photodiode statt eines Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen...)_
 
 Bei Tests in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei ca. 1000.
 
