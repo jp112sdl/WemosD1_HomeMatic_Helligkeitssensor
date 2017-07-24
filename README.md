@@ -33,7 +33,6 @@ Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskab
 
 
 ## Vorbereitung an der CCU
-Voraussetzung ist ein installiertes Addon "CUxD" auf der CCU2.
 In der WebUI unter Einstellungen->Systemvariable ist eine Variable vom Typ Zahl anzulegen.
 Beim Klick auf den Button 'Neu' öffnet sich ein Fenster zum Anlegen der Variable.
 ![ccuvariableneu](Images/CCU_VariableNeu.png)
