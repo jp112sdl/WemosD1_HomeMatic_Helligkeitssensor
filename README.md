@@ -8,12 +8,14 @@ Bei Tests in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei c
 
 
 ## Teileliste:
-- 1x [Wemos D1 mini](http://www.ebay.de/itm/272271662681)
-- 1x Stromversorgungsmodul, z.B. [HLK-PM01](http://www.ebay.de/itm/272521453807)
-- 1x [LDR](http://www.ebay.de/itm/321957950526)
-- 1x [Widerstand 10k](http://www.ebay.de/itm/221833069520)
+- 1x [Wemos D1 mini](http://www.ebay.de/itm/272271662681) (ca. 3,29 EUR)
+- 1x Stromversorgungsmodul, z.B. [HLK-PM01](http://www.ebay.de/itm/272521453807) (ca. 2,34 EUR)
+- 1x [LDR](http://www.ebay.de/itm/321957950526) (ca. 2,75 EUR / 20 Stück = 0,14 EUR/Stk.)
+- 1x [Widerstand 10k](http://www.ebay.de/itm/221833069520) (ca. 1,49 EUR / 10 Stück = 0,15 EUR/Stk.)
 - 1x [Taster](http://www.ebay.de/itm/263057910534), wird jedoch nur zur (Erst-)Konfiguration benötigt
 (_statt des Tasters kann man auch mit einer temporären Drahtbrücke arbeiten_) 
+
+Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskabel) somit bei ca. 6,- EUR.
 
 ## Verdrahtung:
 ![wiring](Images/wiring.png)
