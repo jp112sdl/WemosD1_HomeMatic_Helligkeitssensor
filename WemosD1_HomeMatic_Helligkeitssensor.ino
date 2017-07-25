@@ -8,7 +8,7 @@
 
 char SendIntervalSeconds[8]  = "60";
 char ccuip[16];
-String Variable;//         = "CUX9002001";
+String Variable;
 bool SerialDEBUG = true;
 
 //WifiManager - don't touch
