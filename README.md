@@ -30,6 +30,22 @@ Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskab
 
 **(Beispielaufbau (ohne Taster!))**
 
+## Flashen
+Wenn alles nach obigem Bild verdrahtet wurde, kann das Image ```WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin``` auf den Wemos geflasht werden.
+
+#### Vorgehensweise:
+1. Voraussetzungen:
+  - CH340-Treiber installieren ([Download-Seite des Herstellers](https://wiki.wemos.cc/downloads))
+  - [esptool](https://github.com/igrr/esptool-ck/releases) herunterladen
+2. Die Dateien esptool.exe und WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin am besten in einem gemeinsamen Verzeichnis ablegen
+3. WemosD1 mit einem microUSB-Kabel an den PC anschließen
+4. Bezeichnung des neuen COM-Ports im Gerätemanager notieren (z.B. COM5)
+5. Flash-Vorgang durchführen: 
+  - Windows Eingabeaufforderung öffnen
+  - ins Verzeichnis von esptool/WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin wechseln (cd c:\... usw.)
+  - anschließend Flash-Vorgang starten mit
+  
+```esptool.exe -vv -cd nodemcu -cb 921600 -cp COM5 -ca 0x00000 -cf WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin```
 
 
 ## Vorbereitung an der CCU
