@@ -51,7 +51,7 @@ void setStateCCU(String value) {
   if (WiFi.status() == WL_CONNECTED)
   {
     HTTPClient http;
-    String url = "http://" + String(ccuip) + ":8181/cuxd.exe?ret=dom.GetObject(%22" + Variable + "%22).State(" + value + ")";
+    String url = "http://" + String(ccuip) + ":8181/x.exe?ret=dom.GetObject(%22" + Variable + "%22).State(" + value + ")";
     printSerial("URL = " + url);
     http.begin(url);
     int httpCode = http.GET();
