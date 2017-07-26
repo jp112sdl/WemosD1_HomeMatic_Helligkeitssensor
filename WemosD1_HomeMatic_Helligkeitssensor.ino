@@ -3,8 +3,15 @@
 #include <WiFiManager.h>
 #include <FS.h>
 #include <ArduinoJson.h>
+#include <Wire.h>
+#include <BH1750.h>
+
+BH1750 lightMeter;
 
 #define TasterPin     D7 //Taster gegen GND, um den Konfigurationsmodus zu aktivieren
+#define ModePin       D8 //Wenn D8 auf GND, dann BH1750, sonst LDR an A0
+
+bool LDRMODE=false;
 
 char SendIntervalSeconds[8]  = "60";
 char ccuip[16];
@@ -25,6 +32,11 @@ unsigned long lastSendMillis = 0;
 
 void setup() {
   Serial.begin(115200);
+  pinMode(ModePin, INPUT_PULLUP);
+
+  LDRMODE = (digitalRead(ModePin) == HIGH);
+  Serial.println("Modus: "+LDRMODE ? "LDR":"BH1750");
+  
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(A0, INPUT);
   pinMode(TasterPin,    INPUT_PULLUP);
@@ -44,7 +56,24 @@ void setup() {
 
   if (doWifiConnect()) {
     printSerial("WLAN erfolgreich verbunden!");
+    if (LDRMODE) lightMeter.begin();
   } else ESP.restart();
+}
+
+void loop() {
+  //Überlauf der millis() nach 49 Tagen abfangen
+  if (lastSendMillis > millis())
+    lastSendMillis = 0;
+
+  if ((String(SendIntervalSeconds).toInt() > 0) && (lastSendMillis == 0 || millis() - lastSendMillis > ((String(SendIntervalSeconds).toInt()) * 1000))) {
+    lastSendMillis = millis();
+    printSerial("Setze CCU-Wert");
+
+    uint16_t Helligkeit = LDRMODE ? analogRead(A0) : lightMeter.readLightLevel();
+
+    printSerial("Helligkeit = " + String(Helligkeit));
+    setStateCCU(String(Helligkeit));
+  }
 }
 
 void setStateCCU(String value) {
@@ -170,10 +199,8 @@ bool doWifiConnect() {
     delay(100);
     ESP.restart();
   }
-
   return true;
 }
-
 
 void configModeCallback (WiFiManager *myWiFiManager) {
   printSerial("AP-Modus ist aktiv!");
@@ -187,28 +214,25 @@ void saveConfigCallback () {
 
 void parseBytes(const char* str, char sep, byte* bytes, int maxBytes, int base) {
   for (int i = 0; i < maxBytes; i++) {
-    bytes[i] = strtoul(str, NULL, base); 
-    str = strchr(str, sep);               
+    bytes[i] = strtoul(str, NULL, base);
+    str = strchr(str, sep);
     if (str == NULL || *str == '\0') {
-      break;                           
+      break;
     }
-    str++;                               
+    str++;
   }
 }
 
 bool loadSystemConfig() {
-  //read configuration from FS json
   printSerial("mounting FS...");
   if (SPIFFS.begin()) {
     printSerial("mounted file system");
     if (SPIFFS.exists("/" + configJsonFile)) {
-      //file exists, reading and loading
       printSerial("reading config file");
       File configFile = SPIFFS.open("/" + configJsonFile, "r");
       if (configFile) {
         printSerial("opened config file");
         size_t size = configFile.size();
-        // Allocate a buffer to store contents of the file.
         std::unique_ptr<char[]> buf(new char[size]);
 
         configFile.readBytes(buf.get(), size);
@@ -240,22 +264,6 @@ bool loadSystemConfig() {
   } else {
     printSerial("failed to mount FS");
     return false;
-  }
-}
-
-void loop() {
-  //Überlauf der millis() nach 49 Tagen abfangen
-  if (lastSendMillis > millis())
-    lastSendMillis = 0;
-
-  if ((String(SendIntervalSeconds).toInt() > 0) && (lastSendMillis == 0 || millis() - lastSendMillis > ((String(SendIntervalSeconds).toInt()) * 1000))) {
-    lastSendMillis = millis();
-    printSerial("Setze CCU-Wert");
-
-    int Helligkeit = analogRead(A0);
-
-    printSerial("Helligkeit = " + String(Helligkeit));
-    setStateCCU(String(Helligkeit));
   }
 }
 
