@@ -20,7 +20,7 @@ an eine Variable der CCU2.
 - 1x [Taster](http://www.ebay.de/itm/263057910534), wird jedoch nur zur (Erst-)Konfiguration benötigt
 (_statt des Tasters kann man auch mit einer temporären Drahtbrücke arbeiten_) 
 
-Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskabel) somit bei ca. 6,- EUR.
+Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskabel) somit bei ca. 6 bis 8 EUR.
 
 ## Verdrahtung:
 ![wiringLDR](Images/wiring.png)
