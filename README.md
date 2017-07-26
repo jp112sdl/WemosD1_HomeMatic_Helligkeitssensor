@@ -1,12 +1,14 @@
 # WemosD1 HomeMatic Helligkeitssensor
 
 ## Zusammenfassung:
+Es sind hier 2 verschiedene Möglichkeiten des Aufbaus beschrieben.
+Entweder mit einem Photowiderstand oder einem I2C Sensor BH1750.
+_(Genauere Werte sind mit einem BH1750 Helligkeitssensor (liefert Lux) statt des einfachen Photowiderstands (LDR) erreichbar.)_
+
 Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert 
  - bei Verwendung eines Photowiderstands (LDR) in einem Bereich von 0...1023
  - bei Verwendung eines Lichtsensors BH1750 in einem Bereich von 0...65535 Lux
 an eine Variable der CCU2.
-
-_(Genauere Werte sind mit einem BH1750 Helligkeitssensor (liefert Lux) statt des einfachen Photowiderstands (LDR) erreichbar.)_
 
 
 ## Teileliste:
