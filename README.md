@@ -1,20 +1,19 @@
 # WemosD1 HomeMatic Helligkeitssensor
 
 ## Zusammenfassung:
-Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert (ca. 0...1023) an eine Variable der CCU2.
+Der Sensor übermittelt in einem konfigurierbaren Intervall den Helligkeitswert 
+ - bei Verwendung eines Photowiderstands (LDR) in einem Bereich von 0...1023
+ - bei Verwendung eines Lichtsensors BH1750 in einem Bereich von 0...65535 Lux
+an eine Variable der CCU2.
 
-Bei Tests mit dem LDR in absoluter Dunkelheit lag der Wert bei ca. 7, in praller Sonne bei ca. 1000.
-
-
-
-_(Genauere Werte sind zB mit einem BH1750 Helligkeitssensor statt eines einfachen Photowiderstands (LDR) erreichbar, jedoch hatte ich zum Zeitpunkt des Projekts noch einige LDR zu liegen... Aber die Integration eines I2C BH1750 Helligkeitssensor-Moduls (ca. 2,29 EUR) ist in Arbeit und wird fertiggestellt, sobald mir das Bauteil geliefert wurde.)_
-
+_(Genauere Werte sind mit einem BH1750 Helligkeitssensor (liefert Lux) statt des einfachen Photowiderstands (LDR) erreichbar.)_
 
 
 ## Teileliste:
 - 1x [Wemos D1 mini](http://www.ebay.de/itm/272271662681) (ca. 3,29 EUR)
 - 1x Stromversorgungsmodul, z.B. [HLK-PM01](http://www.ebay.de/itm/272521453807) (ca. 2,34 EUR) - oder ein 5V Netzteil mit microUSB
-- 1x [LDR](http://www.ebay.de/itm/321957950526) (ca. 2,75 EUR / 20 Stück = 0,14 EUR/Stk.)
+- entweder: 1x [LDR](http://www.ebay.de/itm/321957950526) (ca. 2,75 EUR / 20 Stück = 0,14 EUR/Stk.)
+- oder: 1x [BH1750](http://www.ebay.de/itm/172461111764) (ca. 2,29 EUR)
 - 1x [Widerstand 10k](http://www.ebay.de/itm/221833069520) (ca. 1,49 EUR / 10 Stück = 0,15 EUR/Stk.)
 - 1x [Taster](http://www.ebay.de/itm/263057910534), wird jedoch nur zur (Erst-)Konfiguration benötigt
 (_statt des Tasters kann man auch mit einer temporären Drahtbrücke arbeiten_) 
@@ -22,13 +21,21 @@ _(Genauere Werte sind zB mit einem BH1750 Helligkeitssensor statt eines einfache
 Die reinen Teilekosten liegen (ohne Gehäuse, div. Kleinkram :) und Anschlusskabel) somit bei ca. 6,- EUR.
 
 ## Verdrahtung:
-![wiring](Images/wiring.png)
+![wiringLDR](Images/wiring.png)
 
-**(Verdrahtung)**
+**(Verdrahtung mit LDR)**
 
-![Beispielaufbau](Images/beispielaufbau.JPG)
+![wiringBH1750](Images/wiring2.png)
 
-**(Beispielaufbau (ohne Taster!))**
+**(Verdrahtung mit BH1750)**
+
+![BeispielaufbauLDR](Images/beispielaufbau.JPG)
+
+**(Beispielaufbau mit LDR (ohne Taster!))**
+
+![BeispielaufbauBH1750](Images/beispielaufbau2.png)
+
+**(Beispielaufbau mit BH1750 (ohne Taster!))**
 
 ## Flashen
 Wenn alles nach obigem Bild verdrahtet wurde, kann das Image ```WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin``` auf den Wemos geflasht werden.
