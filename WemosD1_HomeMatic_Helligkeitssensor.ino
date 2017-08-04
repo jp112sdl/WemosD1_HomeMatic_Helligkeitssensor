@@ -5,13 +5,13 @@
 #include <ArduinoJson.h>
 #include <Wire.h>
 #include <BH1750.h>
+#include <ArduinoOTA.h>
 
 BH1750 lightMeter;
 
 #define TasterPin     D7 //Taster gegen GND, um den Konfigurationsmodus zu aktivieren
-#define ModePin       D8 //Wenn D8 auf GND, dann BH1750, sonst LDR an A0
 
-bool LDRMODE=false;
+bool LDRMODE = false;
 
 char SendIntervalSeconds[8]  = "60";
 char ccuip[16];
@@ -22,7 +22,7 @@ bool SerialDEBUG = true;
 byte ConfigPortalTimeout = 180;
 bool shouldSaveConfig        = false;
 String configJsonFile        = "config.json";
-bool wifiManagerDebugOutput = true;
+bool wifiManagerDebugOutput = false;
 char ip[16]      = "0.0.0.0";
 char netmask[16] = "0.0.0.0";
 char gw[16]      = "0.0.0.0";
@@ -32,11 +32,14 @@ unsigned long lastSendMillis = 0;
 
 void setup() {
   Serial.begin(115200);
-  pinMode(ModePin, INPUT_PULLUP);
 
-  LDRMODE = (digitalRead(ModePin) == HIGH);
-  Serial.println("Modus: "+LDRMODE ? "LDR":"BH1750");
-  
+  lightMeter.begin();
+  LDRMODE = (lightMeter.readLightLevel() == 54612);
+
+  Serial.println();
+  String strMode =  ((LDRMODE) ? "LDR" : "BH1750");
+  Serial.println("Modus: " + strMode);
+
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(A0, INPUT);
   pinMode(TasterPin,    INPUT_PULLUP);
@@ -56,11 +59,13 @@ void setup() {
 
   if (doWifiConnect()) {
     printSerial("WLAN erfolgreich verbunden!");
-    if (LDRMODE) lightMeter.begin();
+    startOTAhandling();
   } else ESP.restart();
 }
 
 void loop() {
+  ArduinoOTA.handle();
+
   //Überlauf der millis() nach 49 Tagen abfangen
   if (lastSendMillis > millis())
     lastSendMillis = 0;
@@ -72,7 +77,9 @@ void loop() {
     uint16_t Helligkeit = LDRMODE ? analogRead(A0) : lightMeter.readLightLevel();
 
     printSerial("Helligkeit = " + String(Helligkeit));
+    digitalWrite(LED_BUILTIN, LOW);
     setStateCCU(String(Helligkeit));
+    digitalWrite(LED_BUILTIN, HIGH);
   }
 }
 
@@ -115,9 +122,9 @@ bool doWifiConnect() {
   wifiManager.setSaveConfigCallback(saveConfigCallback);
   WiFiManagerParameter custom_ccuip("ccu", "IP der CCU2", ccuip, 16);
 
-  char Variablechar[50];
-  Variable.toCharArray(Variablechar, 50);
-  WiFiManagerParameter custom_Variablename("Variable", "Variablenname", Variablechar, 50);
+  char chrVariable[50];
+  Variable.toCharArray(chrVariable, 50);
+  WiFiManagerParameter custom_Variablename("Variable", "Variablenname", chrVariable, 50);
   WiFiManagerParameter custom_sendinterval("sendinterval", "&Uuml;bertragung alle x Sekunden", SendIntervalSeconds, 8);
 
   WiFiManagerParameter custom_ip("custom_ip", "IP-Adresse", "", 16);
@@ -133,8 +140,6 @@ bool doWifiConnect() {
   wifiManager.addParameter(&custom_gw);
 
   String Hostname = "WemosD1-" + WiFi.macAddress();
-  char a[] = "";
-  Hostname.toCharArray(a, 30);
 
   wifiManager.setConfigPortalTimeout(ConfigPortalTimeout);
 
@@ -144,7 +149,7 @@ bool doWifiConnect() {
       wifiManager.resetSettings();
     }
     else {
-      if (!wifiManager.startConfigPortal(a)) {
+      if (!wifiManager.startConfigPortal(Hostname.c_str())) {
         printSerial("failed to connect and hit timeout");
         delay(1000);
         ESP.restart();
@@ -154,7 +159,7 @@ bool doWifiConnect() {
 
   wifiManager.setSTAStaticIPConfig(IPAddress(ipBytes[0], ipBytes[1], ipBytes[2], ipBytes[3]), IPAddress(gwBytes[0], gwBytes[1], gwBytes[2], gwBytes[3]), IPAddress(netmaskBytes[0], netmaskBytes[1], netmaskBytes[2], netmaskBytes[3]));
 
-  wifiManager.autoConnect(a);
+  wifiManager.autoConnect(Hostname.c_str());
 
   printSerial("Wifi Connected");
   printSerial("CUSTOM STATIC IP: " + String(ip) + " Netmask: " + String(netmask) + " GW: " + String(gw));
@@ -244,12 +249,11 @@ bool loadSystemConfig() {
         }
         if (json.success()) {
           printSerial("\nparsed json");
-          strcpy(ip,          json["ip"]);
+          strcpy(ip,         json["ip"]);
           strcpy(netmask,    json["netmask"]);
           strcpy(gw,         json["gw"]);
           strcpy(ccuip,      json["ccuip"]);
-          const char* jsonVariable = json["Variable"];
-          Variable = jsonVariable;
+          Variable = (json["Variable"]).as<String>();
           itoa(json["sendinterval"], SendIntervalSeconds, 10);
         } else {
           printSerial("failed to load json config");
@@ -267,4 +271,30 @@ bool loadSystemConfig() {
   }
 }
 
+void startOTAhandling() {
+  ArduinoOTA.onStart([]() {
+    Serial.println("Start updating");
+  });
+  ArduinoOTA.onEnd([]() {
+    Serial.println("\nEnd");
+  });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("Error[%u]: ", error);
+    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+  });
+  Serial.println("Starte OTA");
+
+  String Hostname = ((LDRMODE) ? "LDR" : "BH1750");
+  Hostname += "-OTA-" + WiFi.macAddress();
+  Serial.println("Hostname = " + Hostname);
+  ArduinoOTA.setHostname(Hostname.c_str());
+  ArduinoOTA.begin();
+}
 
