@@ -55,6 +55,8 @@ Wenn alles nach obigem Bild verdrahtet wurde, kann das Image ```WemosD1_HomeMati
     - esp8266_flasher.exe mit Doppelklick starten
     - auf den Button "Bin" klicken und heruntergeladene ```WemosD1_HomeMatic_Helligkeitssensor.ino.d1_mini.bin``` auswählen
     - ```COM1``` auf den unter 4. ermittelten COM-Port ändern
+    - Wemos D1 vom USB trennen
+    - D3 und GND brücken, dabei den Wemos D1 wieder an USB anschließen
     - Download anklicken
 5. b) Flash-Vorgang durchführen (mit esptool auf Kommandozeile): 
     - (Windows) Eingabeaufforderung öffnen
